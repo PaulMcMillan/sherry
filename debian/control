@@ -1,0 +1,16 @@
+Source: sherry
+Section: python
+Priority: optional
+Maintainer: Christoph Hellwig <hch@lst.de>
+Build-Depends: python-setuptools (>= 0.6b3),
+ python-all (>= 2.6.6-3),
+ debhelper (>= 7.4.3)
+Standards-Version: 3.9.1
+
+Package: sherry
+Architecture: all
+Homepage: https://github.com/PaulMcMillan/sherry.git
+Depends: ${misc:Depends}, ${python:Depends},
+ python-flask (>= 0.9),
+ dnsmasq
+Description: A stateless netboot enabler
