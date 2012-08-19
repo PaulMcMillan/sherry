@@ -27,8 +27,9 @@ class PowerDriver(object):
 
     def reboot(self):
         """Reboot the node"""
-        self.power_off()
-        self.power_on()
+        off = self.power_off()
+        on = self.power_on()
+        return "%s\n%s" % (off, on)
 
 
 class MockPowerDriver(PowerDriver):
@@ -52,20 +53,20 @@ class IPMIDriver(PowerDriver):
 
     def _call_ipmitool(self, action):
         """Helper to call ipmitool"""
-        subprocess.call(['/usr/bin/ipmitool',
-                         '-H', str(self.address),
-                         '-U', str(self.user),
-                         '-P', str(self.password),
-                         'power', str(action)])
+        return subprocess.check_output(['/usr/bin/ipmitool',
+                                        '-H', str(self.address),
+                                        '-U', str(self.user),
+                                        '-P', str(self.password),
+                                        'power', str(action)])
 
     def power_on(self):
-        self._call_ipmitool('on')
+        return self._call_ipmitool('on')
 
     def power_off(self):
-        self._call_ipmitool('off')
+        return self._call_ipmitool('off')
 
     def reboot(self):
-        self._call_ipmitool('cycle')
+        return self._call_ipmitool('cycle')
 
 
 class QemuDriver(PowerDriver):
@@ -74,14 +75,15 @@ class QemuDriver(PowerDriver):
     def _call_virsh(self, action):
         """Helper to call virsh"""
         # XXX: requires libvirt to be configured for password-less operation
-        subprocess.call(['/usr/bin/virsh'
-                         '--connect',
-                         'qemu://127.0.0.1@{1}/system'.format(self.user),
-                         str(action),
-                         str(self.address)])
+        return subprocess.check_output([
+                '/usr/bin/virsh'
+                '--connect',
+                'qemu://127.0.0.1@{1}/system'.format(self.user),
+                str(action),
+                str(self.address)])
 
     def power_on(self):
-        self._call_virsh('on')
+        return self._call_virsh('on')
 
     def power_off(self):
-        self._call_virsh('off')
+        return self._call_virsh('off')
