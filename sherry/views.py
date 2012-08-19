@@ -39,8 +39,8 @@ def reimage():
     reimage_queue[mac_address] = req_vals
     # TODO (PaulM): pre-render the template(s) with these values here
     powerdriver = app.config['POWER_DRIVER'](ipmi_address,
-                                             app.config['IPMI_USER'],
-                                             app.config['IPMI_PASS'])
+                                             app.config['IPMI_USERNAME'],
+                                             app.config['IPMI_PASSWORD'])
     power_results = powerdriver.reboot()
     return ("Reimaging {mac_address} at {ipmi_address}. \n"
             "Power command results: {power_results}".format(**locals()))

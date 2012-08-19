@@ -1,7 +1,7 @@
-SERVER_NAME = 'localhost:24602'
-DEBUG = True
+SERVER_NAME = 'localhost:5000'
+DEBUG = False
 
 # Is this a good hack? A bad one? It's a bit weird...
 from sherry.power import MockPowerDriver as POWER_DRIVER
-IPMI_USER = 'user'
-IPMI_PASS = 'pass'
+IPMI_USERNAME = 'default'
+IPMI_PASSWORD = 'default'
