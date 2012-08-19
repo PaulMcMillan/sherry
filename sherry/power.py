@@ -2,7 +2,11 @@
 Drivers for OBM power on/off handling
 """
 
+import logging
 import subprocess
+
+
+LOG = logging.getLogger(__name__)
 
 
 class PowerDriver(object):
@@ -26,6 +30,22 @@ class PowerDriver(object):
         """Reboot the node"""
         self.power_off()
         self.power_on()
+
+
+class MockPowerDriver(PowerDriver):
+    """A power driver that does nothing but log the requests"""
+
+    def power_on(self):
+        LOG.debug('Powering on at {0}@{1}, passwd: %{2}'
+                  .format(self.user, self.address, self.password))
+
+    def power_off(self):
+        LOG.debug('Powering off at {0}@{1}, passwd: %{2}'
+                  .format(self.user, self.address, self.password))
+
+    def reboot(self):
+        LOG.debug('Rebooting at {0}@{1}, passwd: %{2}'
+                  .format(self.user, self.address, self.password))
 
 
 class IPMIDriver(PowerDriver):
