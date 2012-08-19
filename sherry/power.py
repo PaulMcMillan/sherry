@@ -34,10 +34,10 @@ class IPMIDriver(PowerDriver):
     def _call_ipmitool(self, action):
         """Helper to call ipmitool"""
         subprocess.call(['/usr/bin/ipmitool',
-                         '-H {0}'.format(self.address),
-                         '-U {0}'.format(self.user),
-                         '-P {0}'.format(self.password),
-                         'power {0}'.format(action)])
+                         '-H', str(self.address),
+                         '-U', str(self.user),
+                         '-P', str(self.password),
+                         'power', str(action)])
 
     def power_on(self):
         self._call_ipmitool('on')
@@ -45,20 +45,24 @@ class IPMIDriver(PowerDriver):
     def power_off(self):
         self._call_ipmitool('off')
 
+    def reboot(self):
+        self._call_ipmitool('cycle')
+
 
 class QemuDriver(PowerDriver):
     """Power on/off Qemu/KVM virtual machines using virsh"""
 
     def _call_virsh(self, action):
         """Helper to call virsh"""
+        instance_name = self.extra_data
 
         # XXX: requires libvirt to be configured for password-less operation
         subprocess.call(['/usr/bin/virsh'
-                         '--connect qemu://{0}@{1}/system {2} {3}'
-                         .format(self.user,
-                                 self.address,
-                                 action,
-                                 self.extra_data)])
+                         '--connect',
+                         'qemu://{0}@{1}/system'
+                         .format(self.user, self.address),
+                         str(action),
+                         str(instance_name)])
 
     def power_on(self):
         self._call_virsh('on')
