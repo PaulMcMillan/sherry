@@ -1,5 +1,5 @@
 
-Sherry runs a built-in flask webserver on port 24601 and provides the
+Sherry runs a built-in flask webserver on port 24602 and provides the
 following endpoints:
 
  - pxe/chain.pxe
