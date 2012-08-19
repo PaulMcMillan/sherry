@@ -1,0 +1,2 @@
+recursive-include sherry/templates *
+recursive-include sherry/static *

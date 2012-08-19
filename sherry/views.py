@@ -1,15 +1,12 @@
-from flask import Flask
 from flask import render_template
 from flask import request
 
-app = Flask(__name__)
-app.config.from_object('sherry.default_settings')
-#app.config.from_envvar('SHERRY_SETTINGS')
+from sherry import app
 
 reimage_queue = {'mac_addr': {'release':123, 'kernel_opts':'foobar'}}
 
 @app.route('/')
-def foo():
+def index():
     return "%s\n%s" % (app.config['SERVER_NAME'], reimage_queue)
 
 @app.route('/pxe/chain.pxe', methods=['GET'])
@@ -47,6 +44,3 @@ def reimage():
     power_results = powerdriver.reboot()
     return ("Reimaging {mac_address} at {ipmi_address}. \n"
             "Power command results: {power_results}".format(**locals()))
-
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=24602)
