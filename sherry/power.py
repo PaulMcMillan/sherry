@@ -6,7 +6,7 @@ import logging
 import subprocess
 
 
-LOG = logging.getLogger(__name__)
+log = logging.getLogger(__name__)
 
 
 class PowerDriver(object):
@@ -36,15 +36,15 @@ class MockPowerDriver(PowerDriver):
     """A power driver that does nothing but log the requests"""
 
     def power_on(self):
-        LOG.debug('Powering on at {0}@{1}, passwd: %{2}'
+        log.debug('Powering on at {0}@{1}, passwd: %{2}'
                   .format(self.user, self.address, self.password))
 
     def power_off(self):
-        LOG.debug('Powering off at {0}@{1}, passwd: %{2}'
+        log.debug('Powering off at {0}@{1}, passwd: %{2}'
                   .format(self.user, self.address, self.password))
 
     def reboot(self):
-        LOG.debug('Rebooting at {0}@{1}, passwd: %{2}'
+        log.debug('Rebooting at {0}@{1}, passwd: %{2}'
                   .format(self.user, self.address, self.password))
 
 
@@ -53,6 +53,8 @@ class IPMIDriver(PowerDriver):
 
     def _call_ipmitool(self, action):
         """Helper to call ipmitool"""
+        log.info('IPMI power {action}. {self.user}@{self.address}'.format(
+                action=action, self=self))
         return subprocess.check_output(['/usr/bin/ipmitool',
                                         '-H', str(self.address),
                                         '-U', str(self.user),
@@ -74,6 +76,8 @@ class QemuDriver(PowerDriver):
 
     def _call_virsh(self, action):
         """Helper to call virsh"""
+        log.info('Qemu power {action}. {self.user}@{self.address}'.format(
+                action=action, self=self))
         # XXX: requires libvirt to be configured for password-less operation
         return subprocess.check_output([
                 '/usr/bin/virsh'
