@@ -1,0 +1,12 @@
+#!ipxe
+
+# DHCP until it works
+:retry_dhcp
+dhcp || goto retry_dhcp
+
+# NOTE: syslog ip is set via DHCP
+echo Running ${filename}
+echo syslog server is ${syslog}
+
+# go straight to the hard disk
+sanboot --no-describe --drive 0x80

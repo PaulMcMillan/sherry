@@ -1,0 +1,9 @@
+#!ipxe
+
+# DHCP until it works
+:retry_dhcp
+dhcp || goto retry_dhcp
+
+echo Running ${filename}
+
+chain http://{{ pxe_host }}:24602/pxe/${net0/mac:hex}

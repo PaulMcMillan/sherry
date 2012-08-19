@@ -1,0 +1,13 @@
+#!ipxe
+
+# DHCP until it works
+:retry_dhcp
+dhcp || goto retry_dhcp
+
+# NOTE: syslog ip is set via DHCP
+echo Running ${filename}
+echo syslog server is ${syslog}
+
+# load the installer kernel and initrd to install linux
+kernel http://{{ pxe_host }}/pxe/linux {{ install_kernel_opts }}
+initrd http://{{ pxe_host }}/pxe/initrd.gz

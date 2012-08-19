@@ -1,0 +1,15 @@
+
+Sherry runs a built-in flask webserver on port 24601 and provides the
+following endpoints:
+
+ - pxe/chain.pxe
+
+	iPXE chainload.  Will load a new iPXE script for the specific
+	mac address
+
+ - pxe/{mac-addr}
+
+	iPXE script to boot a specific system.  This will either return
+	instructions to stream the installation initramfs from the labvm,
+	or instruct the booting system to chain to the bootload on disk.
+
