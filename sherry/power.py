@@ -5,7 +5,6 @@ Drivers for OBM power on/off handling
 import logging
 import subprocess
 
-
 log = logging.getLogger(__name__)
 
 

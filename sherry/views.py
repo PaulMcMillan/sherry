@@ -15,13 +15,16 @@ log = logging.getLogger(__name__)
 # This stores the list of servers that need to be imaged
 reimage_queue = {}
 
+
 @app.route('/')
 def index():
     return "%s\n%s" % (app.config['SERVER_NAME'], reimage_queue)
 
+
 @app.route('/pxe/chain.pxe', methods=['GET'])
 def chain_pxe():
     return render_template('chain.pxe')
+
 
 @app.route('/pxe/<mac:mac_address>', methods=['GET'])
 def boot_or_reimage(mac_address):
@@ -33,6 +36,7 @@ def boot_or_reimage(mac_address):
     log.info('Served {} install.pxe with info {!s}'.format(
             mac_address, system_info))
     return render_template('install.pxe', **system_info)
+
 
 # allows both HTTP methods for convenience. Bookmark reimage ftw!
 @app.route('/reimage', methods=['GET', 'POST'])
