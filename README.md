@@ -1,9 +1,9 @@
 Sherry is not cobbler
 =====================
 
-
-Sherry Cobbler
 --------------
+Sherry Cobbler
+______________
  - 4 oz dry Sherry
  - 3 slices orange
  - 2 bar-spoons sugar
