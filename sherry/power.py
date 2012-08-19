@@ -12,11 +12,10 @@ LOG = logging.getLogger(__name__)
 class PowerDriver(object):
     """Abstraction for powering on/off nodes"""
 
-    def __init__(self, address, user, password, extra_data):
+    def __init__(self, address, user, password):
         self.address = address
         self.user = user
         self.password = password
-        self.extra_data = extra_data
 
     def power_on(self):
         """Power the node on"""
@@ -74,15 +73,12 @@ class QemuDriver(PowerDriver):
 
     def _call_virsh(self, action):
         """Helper to call virsh"""
-        instance_name = self.extra_data
-
         # XXX: requires libvirt to be configured for password-less operation
         subprocess.call(['/usr/bin/virsh'
                          '--connect',
-                         'qemu://{0}@{1}/system'
-                         .format(self.user, self.address),
+                         'qemu://127.0.0.1@{1}/system'.format(self.user),
                          str(action),
-                         str(instance_name)])
+                         str(self.address)])
 
     def power_on(self):
         self._call_virsh('on')
