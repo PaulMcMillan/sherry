@@ -1,14 +1,3 @@
-
-expand-hosts
-log-queries
-
-# XXX: make the dhcp range a template variable?
-dhcp-range=192.168.200.100,192.168.200.225
-dhcp-option=3,{{ config.SERVER_NAME }}
-
-dhcp-lease-max=1000
-dhcp-authoritative
-
 # If the user-class is "iPXE" tag it as "ipxeclient":
 dhcp-userclass=set:ipxeclient,iPXE
 # If the request is tagged with "ipxeclient" then chain it to the ipxe
