@@ -2,17 +2,20 @@
 Drivers for OBM power on/off handling
 """
 
+import logging
 import subprocess
+
+
+LOG = logging.getLogger(__name__)
 
 
 class PowerDriver(object):
     """Abstraction for powering on/off nodes"""
 
-    def __init__(self, address, user, password, extra_data):
+    def __init__(self, address, user, password):
         self.address = address
         self.user = user
         self.password = password
-        self.extra_data = extra_data
 
     def power_on(self):
         """Power the node on"""
@@ -28,16 +31,32 @@ class PowerDriver(object):
         self.power_on()
 
 
+class MockPowerDriver(PowerDriver):
+    """A power driver that does nothing but log the requests"""
+
+    def power_on(self):
+        LOG.debug('Powering on at {0}@{1}, passwd: %{2}'
+                  .format(self.user, self.address, self.password))
+
+    def power_off(self):
+        LOG.debug('Powering off at {0}@{1}, passwd: %{2}'
+                  .format(self.user, self.address, self.password))
+
+    def reboot(self):
+        LOG.debug('Rebooting at {0}@{1}, passwd: %{2}'
+                  .format(self.user, self.address, self.password))
+
+
 class IPMIDriver(PowerDriver):
     """Power on/off using ipmitool"""
 
     def _call_ipmitool(self, action):
         """Helper to call ipmitool"""
         subprocess.call(['/usr/bin/ipmitool',
-                         '-H {0}'.format(self.address),
-                         '-U {0}'.format(self.user),
-                         '-P {0}'.format(self.password),
-                         'power {0}'.format(action)])
+                         '-H', str(self.address),
+                         '-U', str(self.user),
+                         '-P', str(self.password),
+                         'power', str(action)])
 
     def power_on(self):
         self._call_ipmitool('on')
@@ -45,20 +64,21 @@ class IPMIDriver(PowerDriver):
     def power_off(self):
         self._call_ipmitool('off')
 
+    def reboot(self):
+        self._call_ipmitool('cycle')
+
 
 class QemuDriver(PowerDriver):
     """Power on/off Qemu/KVM virtual machines using virsh"""
 
     def _call_virsh(self, action):
         """Helper to call virsh"""
-
         # XXX: requires libvirt to be configured for password-less operation
         subprocess.call(['/usr/bin/virsh'
-                         '--connect qemu://{0}@{1}/system {2} {3}'
-                         .format(self.user,
-                                 self.address,
-                                 action,
-                                 self.extra_data)])
+                         '--connect',
+                         'qemu://127.0.0.1@{1}/system'.format(self.user),
+                         str(action),
+                         str(self.address)])
 
     def power_on(self):
         self._call_virsh('on')
