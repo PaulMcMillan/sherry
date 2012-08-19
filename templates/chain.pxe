@@ -6,4 +6,4 @@ dhcp || goto retry_dhcp
 
 echo Running ${filename}
 
-chain http://{{ sherry_host }}/pxe/${net0/mac:hex}
+chain http://{{ sherry_host }}:{{ sherry_port}}/pxe/${net0/mac:hex}

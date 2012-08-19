@@ -1,0 +1,19 @@
+
+expand-hosts
+log-queries
+
+# XXX: make the dhcp range a template variable?
+dhcp-range=192.168.200.100,192.168.200.225
+dhcp-option=3,{{ sherry_host }}
+
+dhcp-lease-max=1000
+dhcp-authoritative
+
+# If the user-class is "iPXE" tag it as "ipxeclient":
+dhcp-userclass=set:ipxeclient,iPXE
+# If the request is tagged with "ipxeclient" then chain it to the ipxe
+# script:
+dhcp-boot=tag:ipxeclient,http://{{ sherry_host }}:{{ sherry_port }}/pxe/chain.pxe
+# If the request is not tagged with "ipxeclient" it is probably a NIC card
+# and we want it to load iPXE:
+dhcp-boot=tag:!ipxeclient,ipxe_chain.pxe
