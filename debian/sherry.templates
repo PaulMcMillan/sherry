@@ -1,0 +1,4 @@
+Template: sherry/interface
+Type: string
+Default: 127.0.0.1
+Description: Interface to listen on for tftp and http requests.
