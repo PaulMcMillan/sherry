@@ -11,6 +11,6 @@ Package: sherry
 Architecture: all
 Homepage: https://github.com/PaulMcMillan/sherry.git
 Depends: ${misc:Depends}, ${python:Depends},
- python-flask (>= 0.9),
+ python-flask,
  dnsmasq
 Description: A stateless netboot enabler
