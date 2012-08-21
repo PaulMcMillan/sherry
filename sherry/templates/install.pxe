@@ -11,3 +11,4 @@ echo syslog server is ${syslog}
 # load the installer kernel and initrd to install linux
 kernel http://{{ config.SERVER_NAME }}/static/{{ release }}/linux {{ kernel_opts }}
 initrd http://{{ config.SERVER_NAME }}/static/{{ release }}/initrd.gz
+boot
