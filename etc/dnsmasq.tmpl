@@ -5,4 +5,4 @@ dhcp-userclass=set:ipxeclient,iPXE
 dhcp-boot=tag:ipxeclient,http://_SHERRY_SERVER_NAME_/pxe/chain.pxe
 # If the request is not tagged with "ipxeclient" it is probably a NIC card
 # and we want it to load iPXE:
-dhcp-boot=tag:!ipxeclient,ipxe_chain.pxe
+dhcp-boot=tag:!ipxeclient,undionly.kpxe
