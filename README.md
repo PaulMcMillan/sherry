@@ -22,14 +22,14 @@ Sherry might be faster than configuring Cobbler.
 Installation
 ------------
 
-Sherry depends on Flask, dnsmasq, and ipxe. Installing the deb will
+Sherry depends on Flask, dnsmasq, and iPXE. Installing the deb will
 install the sherry specific dnsmasq boot script, but you are responsible for
 making dnsmasq serve dhcp and tftp.
 
 You'll need to make sure your `/etc/dnsmasq.conf` contains these lines:
 
     enable-tftp
-    tftp-root=/usr/lib/ipxe/ # or your equivalent
+    tftp-root=/usr/lib/ipxe/
     conf-dir=/etc/dnsmasq.d
 
 You will also need to configure your webserver of choice to serve
@@ -38,6 +38,33 @@ sherry at the URL specified during installation (in
 and any additional files which may be required (e.g. by
 initramfs-tools).
 
+Usage
+-----
+Control flow with Sherry is roughly like this:
+
+ - Client PXE Boots, gets DHCP from dnsmasq
+ - Client downloads and boots iPXE
+ - iPXE downloads `/pxe/<mac_address>`
+ - Server sends
+   - `boot.pxe` if the mac is unknown.
+   - `install.pxe` if mac is known. Server removes mac from list.
+ - Client boots from disk or via provided initrd, kernel, and kernel
+   parameters.
+
+In normal use, clients always get redirected to boot from disk. When a
+client needs to be reimaged, make a request (GET or POST) to
+`/reimage` with these parameters:
+
+ - `mac_address`
+ - `obm_address`
+ - `release`
+ - `kernel_opts`
+
+Sherry will use the `obm_address` (and configured obm credentials) to
+reboot the client. When it restarts, it will boot using
+
+ - `kernel http://{SERVER_NAME}/static/{release}/vmlinuz {kernel_opts}`
+ - `initrd http://{SERVER_NAME}/static/{release}/initrd.img`
 
 Sherry Cobbler
 --------------

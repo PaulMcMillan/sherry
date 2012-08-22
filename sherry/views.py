@@ -46,7 +46,7 @@ def reimage():
     - obm_address
     - mac_address
     - release
-    - kernel
+    - kernel_opts
     """
     request_values = request.values.to_dict()
     obm_address = request_values.pop('obm_address')
