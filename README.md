@@ -66,6 +66,12 @@ reboot the client. When it restarts, it will boot using
  - `kernel http://{SERVER_NAME}/static/{release}/vmlinuz {kernel_opts}`
  - `initrd http://{SERVER_NAME}/static/{release}/initrd.img`
 
+Security
+--------
+
+Sherry deliberately has no security mechanisms. Don't expose it to a
+public network.
+
 Sherry Cobbler
 --------------
  - 4 oz dry Sherry
