@@ -24,6 +24,10 @@ class PowerDriver(object):
         """Power the node off"""
         raise NotImplementedError()
 
+    def status(self):
+        """Get node power status"""
+        raise NotImplementedError()
+
     def reboot(self):
         """Reboot the node"""
         off = self.power_off()
@@ -50,11 +54,13 @@ class MockPowerDriver(PowerDriver):
 class IPMIDriver(PowerDriver):
     """Power on/off using ipmitool"""
 
+    IPMITOOL_PATH = '/usr/bin/ipmitool'
+
     def _call_ipmitool(self, action):
         """Helper to call ipmitool"""
         log.info('IPMI power {action}. {self.user}@{self.address}'.format(
                 action=action, self=self))
-        return subprocess.check_output(['/usr/bin/ipmitool',
+        return subprocess.check_output([self.IPMITOOL_PATH,
                                         '-H', str(self.address),
                                         '-U', str(self.user),
                                         '-P', str(self.password),
@@ -66,8 +72,15 @@ class IPMIDriver(PowerDriver):
     def power_off(self):
         return self._call_ipmitool('off')
 
+    def status(self):
+        return self._call_ipmitool('status')
+
     def reboot(self):
-        return self._call_ipmitool('cycle')
+        # not all devices can cycle from 'off'
+        try:
+            return self._call_ipmitool('cycle')
+        except subprocess.CalledProcessError:
+            return self.power_on()
 
 
 class QemuDriver(PowerDriver):
