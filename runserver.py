@@ -2,7 +2,7 @@
 from sherry import app
 
 # Load debug config
-app.config.from_pyfile('../sherry.conf', silent=False)
+app.config.from_pyfile('../sherry.conf', silent=True)
 
 app.run(host='0.0.0.0', port=5000, debug=True)
 
