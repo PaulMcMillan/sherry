@@ -27,3 +27,6 @@ pip-log.txt
 debian/sherry/
 debian/sherry.*debhelper*
 debian/sherry.substvars
+
+# Dev/testing config
+/sherry.conf
