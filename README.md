@@ -22,21 +22,17 @@ Sherry might be faster than configuring Cobbler.
 Installation
 ------------
 
-Sherry depends on Flask, dnsmasq, and iPXE. Installing the deb will
-install the sherry specific dnsmasq boot script, but you are responsible for
-making dnsmasq serve dhcp and tftp.
+Sherry depends on Flask, gunicorn, dnsmasq, and iPXE. Installing the
+deb will install the sherry specific dnsmasq boot script, and
+configure dnsmasq to serve tftp, but you are responsible for making
+dnsmasq serve dhcp.
 
-You'll need to make sure your `/etc/dnsmasq.conf` contains these lines:
+You'll need to make sure your `/etc/dnsmasq.conf` contains this line:
 
-    enable-tftp
-    tftp-root=/usr/lib/ipxe/
     conf-dir=/etc/dnsmasq.d
 
-You will also need to configure your webserver of choice to serve
-sherry at the URL specified during installation (in
-`/etc/dnsmasq.d/sherry`). You must also serve your initrd and kernel,
-and any additional files which may be required (e.g. by
-initramfs-tools).
+Sherry installs and configures nginx to serve the sherry app, as well
+as the image files.
 
 Usage
 -----
@@ -63,8 +59,8 @@ client needs to be reimaged, make a request (GET or POST) to
 Sherry will use the `obm_address` (and configured obm credentials) to
 reboot the client. When it restarts, it will boot using
 
- - `kernel http://{SERVER_NAME}/static/{release}/vmlinuz {kernel_opts}`
- - `initrd http://{SERVER_NAME}/static/{release}/initrd.img`
+ - `kernel http://{SERVER_NAME}/releases/{release}/vmlinuz {kernel_opts}`
+ - `initrd http://{SERVER_NAME}/releases/{release}/initrd.img`
 
 Security
 --------

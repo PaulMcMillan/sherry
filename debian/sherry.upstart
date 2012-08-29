@@ -1,0 +1,12 @@
+description     "sherry"
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+respawn
+
+pre-start exec mkdir -p /var/log/sherry
+
+env SHERRY_SETTINGS_PATH=/etc/sherry/sherry.conf
+
+# This launches gunicorn for sherry
+exec gunicorn sherry:app --config=/etc/sherry/gunicorn.conf

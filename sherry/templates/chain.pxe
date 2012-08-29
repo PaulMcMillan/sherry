@@ -6,4 +6,4 @@ dhcp || goto retry_dhcp
 
 echo Running ${filename}
 
-chain http://{{ config.SERVER_NAME }}/pxe/${net0/mac:hex}
+chain {{ request.url_root }}pxe/${net0/mac:hex}

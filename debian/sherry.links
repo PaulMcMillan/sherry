@@ -1,1 +1,3 @@
-etc/sherry/dnsmasq.tmpl etc/dnsmasq.d/sherry
+etc/sherry/sherry.dnsmasq etc/dnsmasq.d/sherry
+etc/sherry/sherry.nginx etc/nginx/sites-available/sherry
+etc/nginx/sites-available/sherry etc/nginx/sites-enabled/sherry

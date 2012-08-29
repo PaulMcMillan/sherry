@@ -1,4 +1,3 @@
-SERVER_NAME = 'localhost:5000'
 DEBUG = False
 
 # Is this a good hack? A bad one? It's a bit weird...

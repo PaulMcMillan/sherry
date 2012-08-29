@@ -20,7 +20,17 @@ configure)
 
     sed -e \
         "s,_SHERRY_SERVER_NAME_,$RET," \
-	-i /etc/sherry/dnsmasq.tmpl
+	-i /etc/sherry/sherry.dnsmasq
+
+    sed -e \
+        "s,_SHERRY_SERVER_NAME_,$RET," \
+	-i /etc/sherry/sherry.nginx
+
+    db_get sherry/image_dir
+
+    sed -e \
+        "s,_SHERRY_IMAGE_DIR_,$RET," \
+	-i /etc/sherry/sherry.nginx
     ;;
 abort-upgrade)
      echo "aport upgrade called"
