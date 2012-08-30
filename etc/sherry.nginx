@@ -1,0 +1,13 @@
+server {
+      listen _SHERRY_SERVER_NAME_;
+      location /releases/ {
+               autoindex on;
+               alias _SHERRY_IMAGE_DIR_;
+               expires 7d;
+      }
+
+      location / {
+               proxy_redirect off;
+               proxy_pass http://unix:/var/run/sherry.sock;
+        }
+}

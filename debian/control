@@ -12,5 +12,8 @@ Architecture: all
 Homepage: https://github.com/PaulMcMillan/sherry.git
 Depends: ${misc:Depends}, ${python:Depends},
  python-flask,
- dnsmasq
+ gunicorn,
+ dnsmasq,
+ nginx,
+ ipxe
 Description: A stateless netboot enabler
