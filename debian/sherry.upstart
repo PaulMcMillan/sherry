@@ -5,6 +5,7 @@ stop on runlevel [!2345]
 respawn
 
 pre-start exec mkdir -p /var/log/sherry
+pre-start exec chown www-data:www-data /var/log/sherry
 
 env SHERRY_SETTINGS_PATH=/etc/sherry/sherry.conf
 
