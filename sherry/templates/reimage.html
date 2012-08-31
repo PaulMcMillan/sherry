@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}Reimage{% endblock %}
+
+{% block content %}
+<div>{{ message }}</div>
+<form action="/reimage" method="GET">
+OBM Address: <input type="text" name="obm_address"> <br />
+Mac Address: <input type="text" name="mac_address"> <br />
+Release: <input type="text" name="release"> <br />
+Kernel Options: <input type="text" name="kernel_opts"> <br />
+<input type="submit" value="Submit" />
+</form>
+{% endblock %}

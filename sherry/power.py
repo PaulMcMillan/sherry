@@ -5,7 +5,9 @@ Drivers for OBM power on/off handling
 import logging
 import subprocess
 
-log = logging.getLogger(__name__)
+# FIXME (PaulM): I'm not entirely happy with this
+from sherry import app
+log = app.logger
 
 
 class PowerDriver(object):

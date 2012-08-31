@@ -4,3 +4,6 @@ DEBUG = False
 from sherry.power import MockPowerDriver as POWER_DRIVER
 OBM_USERNAME = 'default'
 OBM_PASSWORD = ''
+
+from logging import StreamHandler
+LOG_HANDLER = StreamHandler()

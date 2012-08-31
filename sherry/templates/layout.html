@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+  <head>
+    <title>{% block title %}{% endblock %} - Sherry</title>
+  </head>
+<body>
+  <div id="header">
+      {% block header %}
+      <div><a href="/">Home</a> | <a href="/reimage">Reimage</a> | <a href="/log">Log</a></div>
+      <hr />
+      {% endblock %}
+  </div>
+  <div id="content">{% block content %}{% endblock %}</div>
+</body>

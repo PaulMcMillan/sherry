@@ -11,4 +11,5 @@ app.config.from_envvar('SHERRY_SETTINGS_PATH', silent=True)
 app.url_map.converters['mac'] = converters.MacConverter
 app.jinja_env.undefined = jinja2.StrictUndefined
 
+app.logger.addHandler(app.config['LOG_HANDLER'])
 import sherry.views
