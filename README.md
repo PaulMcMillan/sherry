@@ -34,6 +34,9 @@ You'll need to make sure your `/etc/dnsmasq.conf` contains this line:
 Sherry installs and configures nginx to serve the sherry app, as well
 as the image files.
 
+You'll need to enter your IPMI username and password
+`/etc/sherry/sherry.conf`.
+
 Usage
 -----
 Control flow with Sherry is roughly like this:
