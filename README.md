@@ -53,14 +53,14 @@ client needs to be reimaged, make a request (GET or POST) to
 
  - `mac_address`
  - `obm_address`
- - `release`
+ - `location`
  - `kernel_opts`
 
 Sherry will use the `obm_address` (and configured obm credentials) to
 reboot the client. When it restarts, it will boot using
 
- - `kernel http://{SERVER_NAME}/releases/{release}/vmlinuz {kernel_opts}`
- - `initrd http://{SERVER_NAME}/releases/{release}/initrd.img`
+ - `kernel http://{SERVER_NAME}/images/{location}/vmlinuz {kernel_opts}`
+ - `initrd http://{SERVER_NAME}/images/{location}/initrd.img`
 
 Security
 --------

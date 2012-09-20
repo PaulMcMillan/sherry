@@ -46,7 +46,7 @@ def reimage():
     Parameters:
     - obm_address
     - mac_address
-    - release
+    - location
     - kernel_opts
     """
     request_values = request.values.to_dict()
@@ -85,3 +85,4 @@ def display_log():
     with open(app.logger.handlers[1].baseFilename) as f:
         log = f.readlines()
     return render_template('log.html', log=log[-50:])
+

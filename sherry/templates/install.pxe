@@ -9,6 +9,6 @@ echo Running ${filename}
 echo syslog server is ${syslog}
 
 # load the installer kernel and initrd to install linux
-kernel {{ request.url_root }}releases/{{ release }}/vmlinuz {{ kernel_opts }}
-initrd {{ request.url_root }}releases/{{ release }}/initrd.img
+kernel {{ request.url_root }}/images/{{ location }}/vmlinuz {{ kernel_opts }}
+initrd {{ request.url_root }}/images/{{ location }}/initrd.img
 boot

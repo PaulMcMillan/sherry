@@ -1,6 +1,6 @@
 server {
       listen _SHERRY_SERVER_NAME_;
-      location /releases/ {
+      location /images/ {
                autoindex on;
                alias _SHERRY_IMAGE_DIR_;
                expires 7d;
